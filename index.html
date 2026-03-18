@@ -44,6 +44,7 @@
     .tag-booked { background: #E8F7EE; color: #0A7C3A; }
     .card-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; }
     .card-desc { font-size: 0.82rem; color: #888; }
+    .card-note { font-size: 0.78rem; color: #aaa; font-style: italic; margin-top: 3px; }
     .card-right { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
     .badge-next { background: var(--pink); color: white; border-radius: 6px; padding: 3px 9px; font-size: 0.68rem; font-weight: 700; }
     .badge-booked { background: #e8f7ee; color: #0A7C3A; border: 1.5px solid #a8dfc0; border-radius: 6px; padding: 3px 9px; font-size: 0.68rem; font-weight: 700; white-space: nowrap; }
@@ -114,7 +115,7 @@
 <footer>#TheWomanPower Biznes Club · środowe spotkania</footer>
 <script>
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8juEVdiqqsbwgD1mGXS0NvoZ5P3XRLJGFY2BJdEFnD1_OKSYkreCnNqP3XLry7gQ5/exec';
-  const MONTHS      = ['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'];
+  const MONTHS = ['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'];
   const MONTHS_FULL = ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'];
   const schedule = [
     {date:'2026-03-18',title:'Nowa struktura środowych spotkań',desc:'Prezentacja założeń i planu na kolejne miesiące',tag:'prezentacja',next:true},
@@ -226,8 +227,16 @@
       card.innerHTML =
         '<div class="date-block"><div class="day">' + d.getDate() + '</div><div class="mon">' + MONTHS[d.getMonth()].toUpperCase() + '</div></div>' +
         '<div class="sep"></div>' +
-        '<div class="card-body"><span class="tag ' + tagCls + '">' + tagLabel + '</span><div class="card-title">' + cardTitle + '</div><div class="card-desc">' + cardDesc + '</div></div>' +
-        '<div class="card-right">' + ((m.next && !isPast) ? '<span class="badge-next">→ Teraz</span>' : '') + (isBooked ? '<span class="badge-booked">Zajęte ✓</span>' : '') + '</div>';
+        '<div class="card-body">' +
+          '<span class="tag ' + tagCls + '">' + tagLabel + '</span>' +
+          '<div class="card-title">' + cardTitle + '</div>' +
+          '<div class="card-desc">' + cardDesc + '</div>' +
+          (isBooked && booking.note ? '<div class="card-note">💬 ' + booking.note + '</div>' : '') +
+        '</div>' +
+        '<div class="card-right">' +
+          ((m.next && !isPast) ? '<span class="badge-next">→ Teraz</span>' : '') +
+          (isBooked ? '<span class="badge-booked">Zajęte ✓</span>' : '') +
+        '</div>';
       cont.appendChild(card);
       if (!isPast && m.tag !== 'networking' && m.tag !== 'ksiazki' && !isBooked) {
         const opt = document.createElement('option');
@@ -247,7 +256,12 @@
     box.innerHTML = '';
     presenters.forEach(p => {
       const init = p.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-      box.innerHTML += '<div class="p-item"><div class="p-avatar">' + init + '</div><div><div class="p-name">' + p.name + '</div><div class="p-date">' + fmtDate(p.date) + ' · ' + p.type + ' · ' + p.topic + '</div></div></div>';
+      box.innerHTML +=
+        '<div class="p-item"><div class="p-avatar">' + init + '</div><div>' +
+        '<div class="p-name">' + p.name + '</div>' +
+        '<div class="p-date">' + fmtDate(p.date) + ' · ' + p.type + ' · ' + p.topic + '</div>' +
+        (p.note ? '<div class="p-date" style="font-style:italic">💬 ' + p.note + '</div>' : '') +
+        '</div></div>';
     });
   }
   function render() { buildSchedule(); renderPresenters(); }
