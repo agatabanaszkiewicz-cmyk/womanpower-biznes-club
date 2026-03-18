@@ -3,27 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>#TheWomanPower Biznes Club</title>
+  <title>#TheWomanPower Biznes Club – Środowe Spotkania</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --pink: #F5177A; --pink-pale: #fff0f6; --pink-bg: #FFF5FA; --gold: #C9A96E; --dark: #1a1a1a; }
+    :root {
+      --pink: #F5177A; --pink-light: #FF5BAD; --pink-pale: #fff0f6;
+      --pink-bg: #FFF5FA; --gold: #C9A96E; --dark: #1a1a1a; --green: #0A7C3A;
+    }
     body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--pink-bg); color: var(--dark); min-height: 100vh; }
     header { background: var(--pink); color: white; text-align: center; padding: 52px 24px 44px; position: relative; overflow: hidden; }
+    header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; background: rgba(255,255,255,0.08); }
+    header::after { content: ''; position: absolute; bottom: -80px; right: -20px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+    .logo-area { margin-bottom: 20px; }
+    .logo-text { display: inline-flex; flex-direction: column; align-items: center; gap: 0; }
     .logo-the { font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-weight: 500; }
-    .logo-main { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; line-height: 1; color: white; display: block; }
+    .logo-main { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; line-height: 1; color: white; }
     .logo-main span { color: var(--gold); }
-    header h2 { font-size: 1rem; font-weight: 400; opacity: 0.85; margin-top: 8px; }
+    header h2 { font-size: 1rem; font-weight: 400; opacity: 0.85; margin-top: 8px; letter-spacing: 0.5px; }
     header .hashtag { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 6px; }
     .legend { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 28px 20px 8px; max-width: 700px; margin: 0 auto; }
     .legend-item { display: flex; align-items: center; gap: 7px; background: white; border-radius: 20px; padding: 6px 14px; font-size: 0.8rem; font-weight: 500; color: #555; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
     .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .container { max-width: 740px; margin: 0 auto; padding: 24px 20px 60px; }
     .section-title { font-size: 0.78rem; font-weight: 700; color: var(--pink); letter-spacing: 2px; text-transform: uppercase; margin: 32px 0 16px; }
-    .schedule { display: flex; flex-direction: column; gap: 10px; }
+    .month-header { font-size: 0.75rem; font-weight: 700; color: #bbb; letter-spacing: 2px; text-transform: uppercase; margin: 22px 0 8px 4px; }
+    .schedule { display: flex; flex-direction: column; gap: 8px; }
     .card { background: white; border-radius: 14px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-left: 4px solid #eee; transition: transform 0.15s, box-shadow 0.15s; }
     .card:hover { transform: translateY(-1px); box-shadow: 0 5px 18px rgba(0,0,0,0.09); }
-    .card.past { opacity: 0.45; }
+    .card.past { opacity: 0.4; }
     .card.next { border-left-color: var(--pink); background: var(--pink-pale); }
+    .card.booked { border-left-color: var(--green); }
     .date-block { min-width: 50px; text-align: center; flex-shrink: 0; }
     .date-block .day { font-size: 1.6rem; font-weight: 800; line-height: 1; color: var(--dark); }
     .date-block .mon { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; color: #aaa; }
@@ -35,21 +44,25 @@
     .tag-prezentacja { background: #EEF0FF; color: #3A3AD6; }
     .tag-ksiazki { background: #E8F7EE; color: #0A7C3A; }
     .tag-open { background: #F5F5F5; color: #888; }
+    .tag-booked { background: #E8F7EE; color: #0A7C3A; }
     .card-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; }
     .card-desc { font-size: 0.82rem; color: #888; }
     .card-right { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
     .badge-next { background: var(--pink); color: white; border-radius: 6px; padding: 3px 9px; font-size: 0.68rem; font-weight: 700; }
+    .badge-booked { background: #e8f7ee; color: #0A7C3A; border: 1.5px solid #a8dfc0; border-radius: 6px; padding: 3px 9px; font-size: 0.68rem; font-weight: 700; white-space: nowrap; }
     .signup-section { background: white; border-radius: 20px; padding: 28px; box-shadow: 0 2px 14px rgba(0,0,0,0.07); margin-top: 8px; }
     .signup-section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
     .signup-section .sub { color: #999; font-size: 0.88rem; margin-bottom: 22px; }
+    .no-slots-msg { background: #f9f9f9; border-radius: 10px; padding: 18px; text-align: center; color: #aaa; font-size: 0.88rem; display: none; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .form-group { margin-bottom: 14px; }
     label { display: block; font-size: 0.82rem; font-weight: 600; color: #666; margin-bottom: 5px; }
     input, select, textarea { width: 100%; padding: 10px 13px; border: 1.5px solid #ede4ea; border-radius: 10px; font-size: 0.92rem; font-family: inherit; color: var(--dark); background: var(--pink-bg); outline: none; transition: border-color 0.2s; }
     input:focus, select:focus, textarea:focus { border-color: var(--pink); background: white; }
     textarea { resize: vertical; min-height: 72px; }
-    .btn { width: 100%; background: var(--pink); color: white; border: none; border-radius: 12px; padding: 13px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s, transform 0.1s; margin-top: 4px; }
+    .btn { width: 100%; background: var(--pink); color: white; border: none; border-radius: 12px; padding: 13px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s, transform 0.1s; margin-top: 4px; letter-spacing: 0.3px; }
     .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
     .success-msg { display: none; background: #edfaf2; border: 1.5px solid #6dbf8f; color: #1f7a4a; border-radius: 10px; padding: 13px 16px; font-size: 0.88rem; margin-top: 14px; text-align: center; }
     .reg-list { margin-top: 26px; }
     .reg-list h3 { font-size: 0.75rem; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
@@ -73,64 +86,181 @@
   <h2>Środowe Spotkania · Biznes Club</h2>
 </header>
 <div class="legend">
-  <div class="legend-item"><span class="dot" style="background:#D6006A"></span>Networking (1. środa)</div>
+  <div class="legend-item"><span class="dot" style="background:#D6006A"></span>Networking (1. Środa)</div>
   <div class="legend-item"><span class="dot" style="background:#C05A00"></span>Case Study</div>
   <div class="legend-item"><span class="dot" style="background:#3A3AD6"></span>Prezentacja biznesowa</div>
-  <div class="legend-item"><span class="dot" style="background:#0A7C3A"></span>Klub książki (ostatnia środa)</div>
+  <div class="legend-item"><span class="dot" style="background:#0A7C3A"></span>Klub książki (ostatnia Środa)</div>
 </div>
 <div class="container">
-  <div class="section-title">Najbliższe spotkania</div>
+  <div class="section-title">Harmonogram spotkań 2026</div>
   <div class="schedule" id="schedule"></div>
   <div class="section-title">Zgłoś prezentację lub case study</div>
   <div class="signup-section">
     <h2>✋ Chcę poprowadzić spotkanie</h2>
-    <p class="sub">Prezentacja biznesowa (15-20 min + Q&amp;A) lub case study.</p>
+    <p class="sub">Prezentacja biznesowa (15–20 min + Q&amp;A) lub case study — podziel się doświadczeniem z klubem.</p>
+    <div class="no-slots-msg" id="noSlotsMsg">Wszystkie wolne sloty są już zajęte. Wróć wkrótce lub napisz do organizatorki!</div>
     <form id="signupForm">
       <div class="form-row">
-        <div class="form-group"><label for="name">Imię i nazwisko</label><input type="text" id="name" placeholder="np. Anna Kowalska" required /></div>
-        <div class="form-group"><label for="type">Rodzaj zgłoszenia</label><select id="type" required><option value="">-- wybierz --</option><option value="Prezentacja biznesowa">Prezentacja biznesowa</option><option value="Case Study">Case Study</option><option value="Prowadzenie spotkania">Inna formuła</option></select></div>
+        <div class="form-group">
+          <label for="name">Imię i nazwisko</label>
+          <input type="text" id="name" placeholder="np. Anna Kowalska" required />
+        </div>
+        <div class="form-group">
+          <label for="type">Rodzaj zgłoszenia</label>
+          <select id="type" required>
+            <option value="">-- wybierz --</option>
+            <option value="Prezentacja biznesowa">🎤 Prezentacja biznesowa</option>
+            <option value="Case Study">🔍 Case Study</option>
+            <option value="Inna formuła">⭐ Inna formuła / pomysł</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group"><label for="date">Preferowana środa</label><select id="date" required><option value="">-- wybierz termin --</option></select></div>
-      <div class="form-group"><label for="topic">Temat</label><input type="text" id="topic" placeholder="np. Jak zmieniłam podejście do klientów" required /></div>
-      <div class="form-group"><label for="note">Czego potrzebujesz od grupy?</label><textarea id="note"></textarea></div>
-      <button type="submit" class="btn">Zgłaszam się!</button>
+      <div class="form-group">
+        <label for="date">Preferowana Środa</label>
+        <select id="date" required>
+          <option value="">-- wybierz termin --</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="topic">Temat / problem</label>
+        <input type="text" id="topic" placeholder="np. Jak zmieniłam podejście do klientów i co to zmieniło w wynikach" required />
+      </div>
+      <div class="form-group">
+        <label for="note">Czego potrzebujesz od grupy? (opcjonalnie)</label>
+        <textarea id="note" placeholder="Czego oczekujesz po tym spotkaniu, co chcesz z niego wynieść..."></textarea>
+      </div>
+      <button type="submit" class="btn">Zgłaszam się! 💪</button>
     </form>
-    <div class="success-msg" id="successMsg">Zgłoszenie zapisane! Do zobaczenia na spotkaniu.</div>
-    <div class="reg-list" id="regList" style="display:none"><h3>Zgłoszone wystąpienia</h3><div id="presenters"></div></div>
+    <div class="success-msg" id="successMsg">🎉 Zgłoszenie zapisane! Do zobaczenia na środowym spotkaniu.</div>
+    <div class="reg-list" id="regList" style="display:none">
+      <h3>Zgłoszone wystąpienia</h3>
+      <div id="presenters"></div>
+    </div>
   </div>
 </div>
 <footer>#TheWomanPower Biznes Club · środowe spotkania</footer>
 <script>
-  const MONTHS=['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','pa\u017a','lis','gru'];
+  const MONTHS=['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'];
+  const MONTHS_FULL=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'];
   const schedule=[
-    {date:'2026-03-18',title:'Nowa struktura \u015brodowych spotka\u0144',desc:'Prezentacja za\u0142o\u017ce\u0144 i planu',tag:'prezentacja',next:true},
-    {date:'2026-03-25',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
-    {date:'2026-04-01',title:'Networking',desc:'Spotkania 1:1, kr\u00f3tkie prezentacje',tag:'networking'},
-    {date:'2026-04-08',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
-    {date:'2026-04-15',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
-    {date:'2026-04-22',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
-    {date:'2026-04-29',title:'Klub ksi\u0105\u017cki',desc:'Wymiana refleksji',tag:'ksiazki'},
-    {date:'2026-05-06',title:'Networking',desc:'Spotkania 1:1, kr\u00f3tkie prezentacje',tag:'networking'},
-    {date:'2026-05-13',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
-    {date:'2026-05-20',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
-    {date:'2026-05-27',title:'Klub ksi\u0105\u017cki',desc:'Wymiana refleksji',tag:'ksiazki'},
+    {date:'2026-03-18',title:'Nowa struktura środowych spotkań',desc:'Prezentacja założeń i planu na kolejne miesiące',tag:'prezentacja',next:true},
+    {date:'2026-03-25',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-04-01',title:'Networking',desc:'Spotkania 1:1, krótkie prezentacje, rozmowy w grupach',tag:'networking'},
+    {date:'2026-04-08',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-04-15',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-04-22',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-04-29',title:'Klub książki',desc:'Wymiana refleksji – szczegóły wkrótce',tag:'ksiazki'},
+    {date:'2026-05-06',title:'Networking',desc:'Spotkania 1:1, krótkie prezentacje, rozmowy w grupach',tag:'networking'},
+    {date:'2026-05-13',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-05-20',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-05-27',title:'Klub książki',desc:'Wymiana refleksji – szczegóły wkrótce',tag:'ksiazki'},
+    {date:'2026-06-03',title:'Networking',desc:'Spotkania 1:1, krótkie prezentacje, rozmowy w grupach',tag:'networking'},
+    {date:'2026-06-10',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-06-17',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-06-24',title:'Klub książki',desc:'Wymiana refleksji – szczegóły wkrótce',tag:'ksiazki'},
+    {date:'2026-07-01',title:'Networking',desc:'Spotkania 1:1, krótkie prezentacje, rozmowy w grupach',tag:'networking'},
+    {date:'2026-07-08',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-07-15',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-07-22',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-07-29',title:'Klub książki',desc:'Wymiana refleksji – szczegóły wkrótce',tag:'ksiazki'},
+    {date:'2026-08-05',title:'Networking',desc:'Spotkania 1:1, krótkie prezentacje, rozmowy w grupach',tag:'networking'},
+    {date:'2026-08-12',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-08-19',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-08-26',title:'Klub książki',desc:'Wymiana refleksji – szczegóły wkrótce',tag:'ksiazki'},
+    {date:'2026-09-02',title:'Networking',desc:'Spotkania 1:1, krótkie prezentacje, rozmowy w grupach',tag:'networking'},
+    {date:'2026-09-09',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-09-16',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-09-23',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-09-30',title:'Klub książki',desc:'Wymiana refleksji – szczegóły wkrótce',tag:'ksiazki'},
+    {date:'2026-10-07',title:'Networking',desc:'Spotkania 1:1, krótkie prezentacje, rozmowy w grupach',tag:'networking'},
+    {date:'2026-10-14',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-10-21',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-10-28',title:'Klub książki',desc:'Wymiana refleksji – szczegóły wkrótce',tag:'ksiazki'},
+    {date:'2026-11-04',title:'Networking',desc:'Spotkania 1:1, krótkie prezentacje, rozmowy w grupach',tag:'networking'},
+    {date:'2026-11-11',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-11-18',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-11-25',title:'Klub książki',desc:'Wymiana refleksji – szczegóły wkrótce',tag:'ksiazki'},
+    {date:'2026-12-02',title:'Networking',desc:'Spotkania 1:1, krótkie prezentacje, rozmowy w grupach',tag:'networking'},
+    {date:'2026-12-09',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-12-16',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-12-23',title:'Slot wolny – case study lub prezentacja',desc:'Zgłoś się, jeśli chcesz poprowadzić!',tag:'open'},
+    {date:'2026-12-30',title:'Klub książki',desc:'Podsumowanie roku – szczegóły wkrótce',tag:'ksiazki'},
   ];
-  const tagConfig={networking:{label:'Networking',cls:'tag-networking'},casestudy:{label:'Case Study',cls:'tag-casestudy'},prezentacja:{label:'Prezentacja biznesowa',cls:'tag-prezentacja'},ksiazki:{label:'Klub ksi\u0105\u017cki',cls:'tag-ksiazki'},open:{label:'Wolny slot',cls:'tag-open'}};
-  function fmtDate(s){const d=new Date(s+'T00:00:00');return d.getDate()+' '+MONTHS[d.getMonth()];}
+  const tagConfig={
+    networking:{label:'Networking',cls:'tag-networking'},
+    casestudy:{label:'Case Study',cls:'tag-casestudy'},
+    prezentacja:{label:'Prezentacja biznesowa',cls:'tag-prezentacja'},
+    ksiazki:{label:'Klub książki',cls:'tag-ksiazki'},
+    open:{label:'Wolny slot 🎤',cls:'tag-open'},
+  };
+  function fmtDate(str){const d=new Date(str+'T00:00:00');return d.getDate()+' '+MONTHS[d.getMonth()];}
+  let presenters=JSON.parse(localStorage.getItem('twp_presenters')||'[]');
   function buildSchedule(){
-    const cont=document.getElementById('schedule'),sel=document.getElementById('date');
+    const cont=document.getElementById('schedule');
+    const sel=document.getElementById('date');
+    cont.innerHTML='';
+    while(sel.options.length>1)sel.remove(1);
+    const today=new Date();today.setHours(0,0,0,0);
+    let lastMonth=null,freeSlots=0;
     schedule.forEach(m=>{
-      const d=new Date(m.date+'T00:00:00'),tc=tagConfig[m.tag]||tagConfig.open;
+      const d=new Date(m.date+'T00:00:00');
+      const isPast=d<today;
+      const tc=tagConfig[m.tag]||tagConfig.open;
+      const monthKey=d.getFullYear()+'-'+d.getMonth();
+      if(monthKey!==lastMonth){
+        lastMonth=monthKey;
+        const mh=document.createElement('div');
+        mh.className='month-header';
+        mh.textContent=MONTHS_FULL[d.getMonth()]+' '+d.getFullYear();
+        cont.appendChild(mh);
+      }
+      const booking=presenters.find(p=>p.date===m.date);
+      const isBooked=!!booking&&m.tag==='open';
       const card=document.createElement('div');
-      card.className='card'+(m.next?' next':'')+(m.past?' past':'');
-      card.innerHTML='<div class="date-block"><div class="day">'+d.getDate()+'</div><div class="mon">'+MONTHS[d.getMonth()].toUpperCase()+'</div></div><div class="sep"></div><div class="card-body"><span class="tag '+tc.cls+'">'+tc.label+'</span><div class="card-title">'+m.title+'</div><div class="card-desc">'+m.desc+'</div></div><div class="card-right">'+(m.next?'<span class="badge-next">Teraz</span>':'')+'</div>';
+      let cls='card';
+      if(m.next&&!isPast)cls+=' next';
+      if(isPast)cls+=' past';
+      if(isBooked)cls+=' booked';
+      card.className=cls;
+      const tagLabel=isBooked?'✓ Zajęte':tc.label;
+      const tagCls=isBooked?'tag-booked':tc.cls;
+      const cardTitle=isBooked?booking.topic:m.title;
+      const cardDesc=isBooked?booking.name+' · '+booking.type:m.desc;
+      card.innerHTML='<div class="date-block"><div class="day">'+d.getDate()+'</div><div class="mon">'+MONTHS[d.getMonth()].toUpperCase()+'</div></div><div class="sep"></div><div class="card-body"><span class="tag '+tagCls+'">'+tagLabel+'</span><div class="card-title">'+cardTitle+'</div><div class="card-desc">'+cardDesc+'</div></div><div class="card-right">'+((m.next&&!isPast)?'<span class="badge-next">→ Teraz</span>':'')+(isBooked?'<span class="badge-booked">Zajęte ✓</span>':'')+'</div>';
       cont.appendChild(card);
-      if(!m.past&&m.tag!=='networking'&&m.tag!=='ksiazki'){const opt=document.createElement('option');opt.value=m.date;opt.textContent='\u015aroda '+fmtDate(m.date);sel.appendChild(opt);}
+      if(!isPast&&m.tag!=='networking'&&m.tag!=='ksiazki'&&!isBooked){
+        const opt=document.createElement('option');
+        opt.value=m.date;
+        opt.textContent='Środa '+fmtDate(m.date);
+        sel.appendChild(opt);
+        freeSlots++;
+      }
+    });
+    const form=document.getElementById('signupForm');
+    const noSlots=document.getElementById('noSlotsMsg');
+    if(freeSlots===0){form.style.display='none';noSlots.style.display='block';}
+    else{form.style.display='block';noSlots.style.display='none';}
+  }
+  function renderPresenters(){
+    if(!presenters.length)return;
+    document.getElementById('regList').style.display='block';
+    const box=document.getElementById('presenters');
+    box.innerHTML='';
+    presenters.forEach(p=>{
+      const init=p.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      box.innerHTML+='<div class="p-item"><div class="p-avatar">'+init+'</div><div><div class="p-name">'+p.name+'</div><div class="p-date">'+fmtDate(p.date)+' · '+p.type+' · '+p.topic+'</div></div></div>';
     });
   }
-  let presenters=JSON.parse(localStorage.getItem('twp_presenters')||'[]');
-  function renderPresenters(){if(!presenters.length)return;document.getElementById('regList').style.display='block';const box=document.getElementById('presenters');box.innerHTML='';presenters.forEach(p=>{const init=p.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);box.innerHTML+='<div class="p-item"><div class="p-avatar">'+init+'</div><div><div class="p-name">'+p.name+'</div><div class="p-date">'+fmtDate(p.date)+' '+p.type+' '+p.topic+'</div></div></div>';});}
-  document.getElementById('signupForm').addEventListener('submit',function(e){e.preventDefault();presenters.push({name:document.getElementById('name').value.trim(),type:document.getElementById('type').value,date:document.getElementById('date').value,topic:document.getElementById('topic').value.trim(),note:document.getElementById('note').value.trim()});localStorage.setItem('twp_presenters',JSON.stringify(presenters));this.reset();const msg=document.getElementById('successMsg');msg.style.display='block';renderPresenters();setTimeout(()=>msg.style.display='none',4500);});
+  document.getElementById('signupForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    presenters.push({name:document.getElementById('name').value.trim(),type:document.getElementById('type').value,date:document.getElementById('date').value,topic:document.getElementById('topic').value.trim(),note:document.getElementById('note').value.trim()});
+    localStorage.setItem('twp_presenters',JSON.stringify(presenters));
+    this.reset();
+    const msg=document.getElementById('successMsg');
+    msg.style.display='block';
+    buildSchedule();renderPresenters();
+    setTimeout(()=>msg.style.display='none',4500);
+  });
   buildSchedule();renderPresenters();
 </script>
 </body>
