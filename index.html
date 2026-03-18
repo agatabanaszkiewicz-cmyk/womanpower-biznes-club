@@ -95,7 +95,7 @@
       <div class="form-group"><label for="note">Czego potrzebujesz od grupy? (opcjonalnie)</label><textarea id="note" placeholder="Czego oczekujesz po tym spotkaniu…"></textarea></div>
       <button type="submit" class="btn" id="submitBtn">Zgłaszam się! 💪</button>
     </form>
-    <div class="success-msg" id="successMsg">🎉 Zgłoszenie zapisane! Do zobaczenia na środowym spotkaniu.</div>
+    <div class="success-msg" id="successMsg">🎉 Zgłoszenie zapisane! Za chwilę pojawi się na harmonogramie.</div>
     <div class="error-msg" id="errorMsg">⚠️ Coś poszło nie tak. Spróbuj jeszcze raz lub napisz do organizatorki.</div>
     <div class="reg-list" id="regList" style="display:none"><h3>Zgłoszone wystąpienia</h3><div id="presenters"></div></div>
   </div>
@@ -157,9 +157,7 @@
   }
   async function savePresenter(p){
     const q=new URLSearchParams({action:'add',name:p.name,type:p.type,date:p.date,topic:p.topic,note:p.note||''});
-    const r=await fetch(SCRIPT_URL+'?'+q);
-    const j=await r.json();
-    if(!j.success)throw new Error('err');
+    await fetch(SCRIPT_URL+'?'+q,{mode:'no-cors'});
   }
   function buildSchedule(){
     const cont=document.getElementById('schedule'),sel=document.getElementById('date');
@@ -193,8 +191,12 @@
     const btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent='Wysyłam…';
     document.getElementById('errorMsg').style.display='none';
     const entry={name:document.getElementById('name').value.trim(),type:document.getElementById('type').value,date:document.getElementById('date').value,topic:document.getElementById('topic').value.trim(),note:document.getElementById('note').value.trim()};
-    try{await savePresenter(entry);presenters.push(entry);this.reset();document.getElementById('successMsg').style.display='block';render();setTimeout(()=>document.getElementById('successMsg').style.display='none',5000);}
-    catch(err){document.getElementById('errorMsg').style.display='block';}
+    try{
+      await savePresenter(entry);
+      this.reset();
+      document.getElementById('successMsg').style.display='block';
+      setTimeout(async()=>{await loadPresenters();document.getElementById('successMsg').style.display='none';},2500);
+    }catch(err){document.getElementById('errorMsg').style.display='block';}
     finally{btn.disabled=false;btn.textContent='Zgłaszam się! 💪';}
   });
   loadPresenters();
