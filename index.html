@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>#TheWomanPower Biznes Club</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --pink: #F5177A; --pink-pale: #fff0f6; --pink-bg: #FFF5FA; --gold: #C9A96E; --dark: #1a1a1a; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--pink-bg); color: var(--dark); min-height: 100vh; }
+    header { background: var(--pink); color: white; text-align: center; padding: 52px 24px 44px; position: relative; overflow: hidden; }
+    .logo-the { font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .logo-main { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; line-height: 1; color: white; display: block; }
+    .logo-main span { color: var(--gold); }
+    header h2 { font-size: 1rem; font-weight: 400; opacity: 0.85; margin-top: 8px; }
+    header .hashtag { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 6px; }
+    .legend { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 28px 20px 8px; max-width: 700px; margin: 0 auto; }
+    .legend-item { display: flex; align-items: center; gap: 7px; background: white; border-radius: 20px; padding: 6px 14px; font-size: 0.8rem; font-weight: 500; color: #555; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .container { max-width: 740px; margin: 0 auto; padding: 24px 20px 60px; }
+    .section-title { font-size: 0.78rem; font-weight: 700; color: var(--pink); letter-spacing: 2px; text-transform: uppercase; margin: 32px 0 16px; }
+    .schedule { display: flex; flex-direction: column; gap: 10px; }
+    .card { background: white; border-radius: 14px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-left: 4px solid #eee; transition: transform 0.15s, box-shadow 0.15s; }
+    .card:hover { transform: translateY(-1px); box-shadow: 0 5px 18px rgba(0,0,0,0.09); }
+    .card.past { opacity: 0.45; }
+    .card.next { border-left-color: var(--pink); background: var(--pink-pale); }
+    .date-block { min-width: 50px; text-align: center; flex-shrink: 0; }
+    .date-block .day { font-size: 1.6rem; font-weight: 800; line-height: 1; color: var(--dark); }
+    .date-block .mon { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; color: #aaa; }
+    .sep { width: 1px; height: 40px; background: #eee; flex-shrink: 0; }
+    .card-body { flex: 1; min-width: 0; }
+    .tag { display: inline-block; border-radius: 6px; padding: 2px 9px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 5px; }
+    .tag-networking { background: #FFE8F4; color: #D6006A; }
+    .tag-casestudy { background: #FFF0E0; color: #C05A00; }
+    .tag-prezentacja { background: #EEF0FF; color: #3A3AD6; }
+    .tag-ksiazki { background: #E8F7EE; color: #0A7C3A; }
+    .tag-open { background: #F5F5F5; color: #888; }
+    .card-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; }
+    .card-desc { font-size: 0.82rem; color: #888; }
+    .card-right { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+    .badge-next { background: var(--pink); color: white; border-radius: 6px; padding: 3px 9px; font-size: 0.68rem; font-weight: 700; }
+    .signup-section { background: white; border-radius: 20px; padding: 28px; box-shadow: 0 2px 14px rgba(0,0,0,0.07); margin-top: 8px; }
+    .signup-section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; }
+    .signup-section .sub { color: #999; font-size: 0.88rem; margin-bottom: 22px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 0.82rem; font-weight: 600; color: #666; margin-bottom: 5px; }
+    input, select, textarea { width: 100%; padding: 10px 13px; border: 1.5px solid #ede4ea; border-radius: 10px; font-size: 0.92rem; font-family: inherit; color: var(--dark); background: var(--pink-bg); outline: none; transition: border-color 0.2s; }
+    input:focus, select:focus, textarea:focus { border-color: var(--pink); background: white; }
+    textarea { resize: vertical; min-height: 72px; }
+    .btn { width: 100%; background: var(--pink); color: white; border: none; border-radius: 12px; padding: 13px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s, transform 0.1s; margin-top: 4px; }
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .success-msg { display: none; background: #edfaf2; border: 1.5px solid #6dbf8f; color: #1f7a4a; border-radius: 10px; padding: 13px 16px; font-size: 0.88rem; margin-top: 14px; text-align: center; }
+    .reg-list { margin-top: 26px; }
+    .reg-list h3 { font-size: 0.75rem; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+    .p-item { display: flex; align-items: center; gap: 11px; background: var(--pink-bg); border-radius: 10px; padding: 9px 13px; margin-bottom: 7px; }
+    .p-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--pink); color: white; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .p-name { font-weight: 600; font-size: 0.88rem; }
+    .p-date { font-size: 0.75rem; color: #aaa; }
+    footer { text-align: center; color: #ccc; font-size: 0.78rem; padding: 20px; }
+    @media (max-width: 520px) { .form-row { grid-template-columns: 1fr; } .card { gap: 12px; } .signup-section { padding: 20px 16px; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="hashtag">#TheWomanPower</div>
+  <div class="logo-area">
+    <div class="logo-text">
+      <span class="logo-the">#THE</span>
+      <span class="logo-main">WOMAN<span>POWER</span></span>
+    </div>
+  </div>
+  <h2>Środowe Spotkania · Biznes Club</h2>
+</header>
+<div class="legend">
+  <div class="legend-item"><span class="dot" style="background:#D6006A"></span>Networking (1. środa)</div>
+  <div class="legend-item"><span class="dot" style="background:#C05A00"></span>Case Study</div>
+  <div class="legend-item"><span class="dot" style="background:#3A3AD6"></span>Prezentacja biznesowa</div>
+  <div class="legend-item"><span class="dot" style="background:#0A7C3A"></span>Klub książki (ostatnia środa)</div>
+</div>
+<div class="container">
+  <div class="section-title">Najbliższe spotkania</div>
+  <div class="schedule" id="schedule"></div>
+  <div class="section-title">Zgłoś prezentację lub case study</div>
+  <div class="signup-section">
+    <h2>✋ Chcę poprowadzić spotkanie</h2>
+    <p class="sub">Prezentacja biznesowa (15-20 min + Q&amp;A) lub case study.</p>
+    <form id="signupForm">
+      <div class="form-row">
+        <div class="form-group"><label for="name">Imię i nazwisko</label><input type="text" id="name" placeholder="np. Anna Kowalska" required /></div>
+        <div class="form-group"><label for="type">Rodzaj zgłoszenia</label><select id="type" required><option value="">-- wybierz --</option><option value="Prezentacja biznesowa">Prezentacja biznesowa</option><option value="Case Study">Case Study</option><option value="Prowadzenie spotkania">Inna formuła</option></select></div>
+      </div>
+      <div class="form-group"><label for="date">Preferowana środa</label><select id="date" required><option value="">-- wybierz termin --</option></select></div>
+      <div class="form-group"><label for="topic">Temat</label><input type="text" id="topic" placeholder="np. Jak zmieniłam podejście do klientów" required /></div>
+      <div class="form-group"><label for="note">Czego potrzebujesz od grupy?</label><textarea id="note"></textarea></div>
+      <button type="submit" class="btn">Zgłaszam się!</button>
+    </form>
+    <div class="success-msg" id="successMsg">Zgłoszenie zapisane! Do zobaczenia na spotkaniu.</div>
+    <div class="reg-list" id="regList" style="display:none"><h3>Zgłoszone wystąpienia</h3><div id="presenters"></div></div>
+  </div>
+</div>
+<footer>#TheWomanPower Biznes Club · środowe spotkania</footer>
+<script>
+  const MONTHS=['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','pa\u017a','lis','gru'];
+  const schedule=[
+    {date:'2026-03-18',title:'Nowa struktura \u015brodowych spotka\u0144',desc:'Prezentacja za\u0142o\u017ce\u0144 i planu',tag:'prezentacja',next:true},
+    {date:'2026-03-25',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
+    {date:'2026-04-01',title:'Networking',desc:'Spotkania 1:1, kr\u00f3tkie prezentacje',tag:'networking'},
+    {date:'2026-04-08',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
+    {date:'2026-04-15',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
+    {date:'2026-04-22',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
+    {date:'2026-04-29',title:'Klub ksi\u0105\u017cki',desc:'Wymiana refleksji',tag:'ksiazki'},
+    {date:'2026-05-06',title:'Networking',desc:'Spotkania 1:1, kr\u00f3tkie prezentacje',tag:'networking'},
+    {date:'2026-05-13',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
+    {date:'2026-05-20',title:'Slot wolny',desc:'Zg\u0142o\u015b si\u0119, je\u015bli chcesz poprowadzi\u0107!',tag:'open'},
+    {date:'2026-05-27',title:'Klub ksi\u0105\u017cki',desc:'Wymiana refleksji',tag:'ksiazki'},
+  ];
+  const tagConfig={networking:{label:'Networking',cls:'tag-networking'},casestudy:{label:'Case Study',cls:'tag-casestudy'},prezentacja:{label:'Prezentacja biznesowa',cls:'tag-prezentacja'},ksiazki:{label:'Klub ksi\u0105\u017cki',cls:'tag-ksiazki'},open:{label:'Wolny slot',cls:'tag-open'}};
+  function fmtDate(s){const d=new Date(s+'T00:00:00');return d.getDate()+' '+MONTHS[d.getMonth()];}
+  function buildSchedule(){
+    const cont=document.getElementById('schedule'),sel=document.getElementById('date');
+    schedule.forEach(m=>{
+      const d=new Date(m.date+'T00:00:00'),tc=tagConfig[m.tag]||tagConfig.open;
+      const card=document.createElement('div');
+      card.className='card'+(m.next?' next':'')+(m.past?' past':'');
+      card.innerHTML='<div class="date-block"><div class="day">'+d.getDate()+'</div><div class="mon">'+MONTHS[d.getMonth()].toUpperCase()+'</div></div><div class="sep"></div><div class="card-body"><span class="tag '+tc.cls+'">'+tc.label+'</span><div class="card-title">'+m.title+'</div><div class="card-desc">'+m.desc+'</div></div><div class="card-right">'+(m.next?'<span class="badge-next">Teraz</span>':'')+'</div>';
+      cont.appendChild(card);
+      if(!m.past&&m.tag!=='networking'&&m.tag!=='ksiazki'){const opt=document.createElement('option');opt.value=m.date;opt.textContent='\u015aroda '+fmtDate(m.date);sel.appendChild(opt);}
+    });
+  }
+  let presenters=JSON.parse(localStorage.getItem('twp_presenters')||'[]');
+  function renderPresenters(){if(!presenters.length)return;document.getElementById('regList').style.display='block';const box=document.getElementById('presenters');box.innerHTML='';presenters.forEach(p=>{const init=p.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);box.innerHTML+='<div class="p-item"><div class="p-avatar">'+init+'</div><div><div class="p-name">'+p.name+'</div><div class="p-date">'+fmtDate(p.date)+' '+p.type+' '+p.topic+'</div></div></div>';});}
+  document.getElementById('signupForm').addEventListener('submit',function(e){e.preventDefault();presenters.push({name:document.getElementById('name').value.trim(),type:document.getElementById('type').value,date:document.getElementById('date').value,topic:document.getElementById('topic').value.trim(),note:document.getElementById('note').value.trim()});localStorage.setItem('twp_presenters',JSON.stringify(presenters));this.reset();const msg=document.getElementById('successMsg');msg.style.display='block';renderPresenters();setTimeout(()=>msg.style.display='none',4500);});
+  buildSchedule();renderPresenters();
+</script>
+</body>
+</html>
