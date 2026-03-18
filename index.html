@@ -101,7 +101,7 @@
   </div>
 </div>
 <footer>#TheWomanPower Biznes Club · środowe spotkania</footer><script>
-  const SCRIPT_URL = 'WKLEJ_TUTAJ_URL_Z_APPS_SCRIPT';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8juEVdiqqsbwgD1mGXS0NvoZ5P3XRLJGFY2BJdEFnD1_OKSYkreCnNqP3XLry7gQ5/exec';
   const MONTHS=['sty','lut','mar','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'];
   const MONTHS_FULL=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'];
   const schedule=[
@@ -152,7 +152,6 @@
   function fmtDate(s){const d=new Date(s+'T00:00:00');return d.getDate()+' '+MONTHS[d.getMonth()];}
   let presenters=[];
   async function loadPresenters(){
-    if(!SCRIPT_URL||SCRIPT_URL==='WKLEJ_TUTAJ_URL_Z_APPS_SCRIPT'){presenters=[];render();return;}
     try{const r=await fetch(SCRIPT_URL);presenters=await r.json();}catch(e){presenters=[];}
     render();
   }
